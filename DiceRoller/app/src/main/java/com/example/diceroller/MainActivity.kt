@@ -18,6 +18,13 @@ class MainActivity : AppCompatActivity() {
 
     private fun rollDice() {
         val randomInt = Random.nextInt(6) + 1
-        textView.text = randomInt.toString()
+        when(randomInt) {
+            1-> iv_dice.setImageResource(R.drawable.dice_1)
+            2-> iv_dice.setImageResource(R.drawable.dice_2)
+            3-> iv_dice.setImageResource(R.drawable.dice_3)
+            4-> iv_dice.setImageResource(R.drawable.dice_4)
+            5-> iv_dice.setImageResource(R.drawable.dice_5)
+            6-> iv_dice.setImageResource(R.drawable.dice_6)
+        }
     }
 }
