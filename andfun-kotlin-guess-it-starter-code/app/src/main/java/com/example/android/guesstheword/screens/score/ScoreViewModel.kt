@@ -1,5 +1,7 @@
 package com.example.android.guesstheword.screens.score
 
+import androidx.lifecycle.LiveData
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import timber.log.Timber
 
@@ -9,10 +11,12 @@ import timber.log.Timber
  */
 class ScoreViewModel(finalScore : Int) : ViewModel() {
 
-    var finalScore : Int = 0
+    private var _finalScore = MutableLiveData<String>()
+    val finalScore : LiveData<String>
+        get() = _finalScore
 
     init {
-        this.finalScore = finalScore
+        _finalScore.value = finalScore.toString()
         Timber.d("Final score : ")
     }
 }

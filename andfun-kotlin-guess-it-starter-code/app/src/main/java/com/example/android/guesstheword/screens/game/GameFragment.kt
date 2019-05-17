@@ -16,10 +16,14 @@
 
 package com.example.android.guesstheword.screens.game
 
+import android.os.Build
 import android.os.Bundle
+import android.os.VibrationEffect
+import android.os.Vibrator
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.content.getSystemService
 import androidx.databinding.DataBindingUtil
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
@@ -51,29 +55,19 @@ class GameFragment : Fragment() {
 
         viewModel = ViewModelProviders.of(this).get(GameViewModel::class.java)
         binding.gameViewModel = viewModel
+        binding.lifecycleOwner = this
+
         Timber.d("View Model initialized")
 
         binding.stopButton.setOnClickListener {
             gameFinished()
         }
 
-        viewModel.score.observe(this, Observer { newValue ->
-            binding.scoreText.text = newValue.toString()
-        })
-
-        viewModel.word.observe(this, Observer { newValue ->
-            binding.wordText.text = newValue
-        })
-
         viewModel.gameFinished.observe(this, Observer { hasGameFinished ->
             if( hasGameFinished) {
                 gameFinished()
                 viewModel.onGameFinished()
             }
-        })
-
-        viewModel.time.observe(this, Observer { time ->
-            binding.timerText.text = time
         })
 
         return binding.root
@@ -86,5 +80,18 @@ class GameFragment : Fragment() {
     private fun gameFinished() {
         val action = GameFragmentDirections.actionGameToScore(viewModel.score.value ?: 0)
         findNavController(this).navigate(action)
+    }
+
+    private fun buzz(pattern: LongArray) {
+        val buzzer = activity?.getSystemService<Vibrator>()
+
+        buzzer?.let {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+                buzzer.vibrate(VibrationEffect.createWaveform(pattern, -1))
+            } else {
+                //deprecated in API 26
+                buzzer.vibrate(pattern, -1)
+            }
+        }
     }
 }

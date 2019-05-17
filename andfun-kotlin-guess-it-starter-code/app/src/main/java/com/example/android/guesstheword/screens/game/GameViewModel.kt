@@ -4,6 +4,7 @@ import android.os.CountDownTimer
 import android.text.format.DateUtils
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
+import androidx.lifecycle.Transformations
 import androidx.lifecycle.ViewModel
 import timber.log.Timber
 
@@ -11,28 +12,44 @@ import timber.log.Timber
 /**
  * Created by Kundan on 17-05-2019.
  */
+private val CORRECT_BUZZ_PATTERN = longArrayOf(100, 100, 100, 100, 100, 100)
+private val PANIC_BUZZ_PATTERN = longArrayOf(0, 200)
+private val GAME_OVER_BUZZ_PATTERN = longArrayOf(0, 2000)
+private val NO_BUZZ_PATTERN = longArrayOf(0)
+
 class GameViewModel : ViewModel() {
+
+    enum class BuzzType(val pattern: LongArray) {
+        CORRECT(CORRECT_BUZZ_PATTERN),
+        GAME_OVER(GAME_OVER_BUZZ_PATTERN),
+        COUNTDOWN_PANIC(PANIC_BUZZ_PATTERN),
+        NO_BUZZ(NO_BUZZ_PATTERN)
+    }
 
     // The current word
     private var _word = MutableLiveData<String>()
-    val word : LiveData<String>
+    val word: LiveData<String>
         get() = _word
     // The current score
     private var _score = MutableLiveData<Int>()
-    val score : LiveData<Int>
+    val score: LiveData<Int>
         get() = _score
     // game finished state
     private var _gameFinished = MutableLiveData<Boolean>()
-    val gameFinished : LiveData<Boolean>
+    val gameFinished: LiveData<Boolean>
         get() = _gameFinished
 
     // The list of words - the front of the list is the next word to guess
     lateinit var wordList: MutableList<String>
 
-    private var timer : CountDownTimer
-    private var _time = MutableLiveData<String>()
-    val time : LiveData<String>
+    private var timer: CountDownTimer
+    private var _time = MutableLiveData<Long>()
+    val time: LiveData<Long>
         get() = _time
+    val timerString = Transformations.map(time, { t ->
+        DateUtils.formatElapsedTime(t / 1000)
+    }
+    )
 
     companion object {
         // These represent different important times
@@ -52,7 +69,7 @@ class GameViewModel : ViewModel() {
         timer = object : CountDownTimer(COUNTDOWN_TIME, ONE_SECOND) {
 
             override fun onTick(millisUntilFinished: Long) {
-                _time.value = DateUtils.formatElapsedTime(millisUntilFinished/1000)
+                _time.value = millisUntilFinished
             }
 
             override fun onFinish() {
