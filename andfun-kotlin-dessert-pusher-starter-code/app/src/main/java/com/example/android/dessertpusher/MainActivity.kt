@@ -32,6 +32,10 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
 
     private var revenue = 0
     private var dessertsSold = 0
+    private lateinit var desertTimer : DessertTimer
+    private val KEY_REVENUE = "101"
+    private val KEY_DESERT_SOLD = "102"
+    private val KEY_DESERT_TIMER = "103"
 
     // Contains all the views
     private lateinit var binding: ActivityMainBinding
@@ -73,13 +77,21 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
             onDessertClicked()
         }
 
+
+        desertTimer = DessertTimer(this.lifecycle)
+
+        if (savedInstanceState != null) {
+            revenue = savedInstanceState.getInt(KEY_REVENUE,0)
+            dessertsSold = savedInstanceState.getInt(KEY_DESERT_SOLD,0)
+            desertTimer.secondsCount = savedInstanceState.getInt(KEY_DESERT_TIMER,0)
+        }
+
         // Set the TextViews to the right values
         binding.revenue = revenue
         binding.amountSold = dessertsSold
 
         // Make sure the correct dessert is showing
         binding.dessertButton.setImageResource(currentDessert.imageId)
-
         Timber.i("on OnCreate")
     }
 
@@ -150,8 +162,37 @@ class MainActivity : AppCompatActivity(), LifecycleObserver {
         return super.onOptionsItemSelected(item)
     }
 
+    override fun onSaveInstanceState(outState: Bundle?) {
+        super.onSaveInstanceState(outState)
+        outState!!.putInt(KEY_REVENUE,revenue)
+        outState.putInt(KEY_DESERT_SOLD,dessertsSold)
+        outState.putInt(KEY_DESERT_TIMER,desertTimer.secondsCount)
+
+    }
     override fun onStart() {
         super.onStart()
         Timber.d("On start")
+        desertTimer.startTimer()
+    }
+
+    override fun onResume() {
+        super.onResume()
+        Timber.d("On Resume")
+    }
+
+    override fun onPause() {
+        super.onPause()
+        Timber.d("On Pause")
+    }
+
+    override fun onStop() {
+        super.onStop()
+        Timber.d("On Stop")
+        desertTimer.stopTimer()
+    }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        Timber.d("On Destroy")
     }
 }
