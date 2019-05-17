@@ -50,13 +50,11 @@ class GameFragment : Fragment() {
         )
 
         viewModel = ViewModelProviders.of(this).get(GameViewModel::class.java)
+        binding.gameViewModel = viewModel
         Timber.d("View Model initialized")
 
-        binding.correctButton.setOnClickListener {
-            viewModel.onCorrect()
-        }
-        binding.skipButton.setOnClickListener {
-            viewModel.onSkip()
+        binding.stopButton.setOnClickListener {
+            gameFinished()
         }
 
         viewModel.score.observe(this, Observer { newValue ->
@@ -72,6 +70,10 @@ class GameFragment : Fragment() {
                 gameFinished()
                 viewModel.onGameFinished()
             }
+        })
+
+        viewModel.time.observe(this, Observer { time ->
+            binding.timerText.text = time
         })
 
         return binding.root
