@@ -25,6 +25,7 @@ import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProviders
 import androidx.navigation.fragment.findNavController
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.android.trackmysleepquality.R
 import com.example.android.trackmysleepquality.database.SleepDatabase
 import com.example.android.trackmysleepquality.databinding.FragmentSleepTrackerBinding
@@ -63,7 +64,13 @@ class SleepTrackerFragment : Fragment() {
 
         binding.lifecycleOwner = this
 
-        val adapter = SleepNightAdapter()
+        val manager = GridLayoutManager(activity,3)
+
+        binding.sleepList.layoutManager = manager
+
+        val adapter = SleepNightAdapter(SleepNightAdapter.SleepNightListener {
+            nightId -> sleepTrackerViewModel.onSleepNightClicked(nightId)
+        })
 
         binding.sleepList.adapter = adapter
 
@@ -85,6 +92,16 @@ class SleepTrackerFragment : Fragment() {
                 // Reset state to make sure the snackbar is only shown once, even if the device
                 // has a configuration change.
                 sleepTrackerViewModel.doneShowingSnackbar()
+            }
+        })
+
+        sleepTrackerViewModel.navigateToSleepDataQuality.observe(this, Observer { night ->
+            night?.let {
+
+                this.findNavController().navigate(
+                        SleepTrackerFragmentDirections
+                                .actionSleepTrackerFragmentToSleepDetailFragment(night))
+                sleepTrackerViewModel.onSleepDataQualityNavigated()
             }
         })
 
