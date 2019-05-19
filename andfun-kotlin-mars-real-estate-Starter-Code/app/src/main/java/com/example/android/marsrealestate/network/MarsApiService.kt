@@ -39,7 +39,7 @@ private val retrofit = Retrofit.Builder()
 
 interface MarsApiService {
     @GET("realestate")
-    fun getString(): Deferred<List<MarsProperty>>
+    fun getProperties(): Deferred<List<MarsProperty>>
 }
 
 object MarsApi {
