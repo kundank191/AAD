@@ -30,7 +30,7 @@ interface VideoDao {
     fun insertAll(vararg video: DatabaseVideo)
 }
 
-@Database(entities = [VideoDao::class],version = 1)
+@Database(entities = [DatabaseVideo::class],version = 1,exportSchema = false)
 abstract class VideoDatabase : RoomDatabase() {
     abstract val videoDao : VideoDao
 }
