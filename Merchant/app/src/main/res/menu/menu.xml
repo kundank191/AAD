@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android" xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <item
+            android:id="@+id/action_add_button"
+            android:title="@string/menu_add"
+            android:icon="@drawable/ic_round_add"
+            app:showAsAction="ifRoom"
+    />
+    <item
+            android:id="@+id/action_phone_pe"
+            android:title="@string/phone_pe"
+            app:showAsAction="never"
+    />
+
+    <item
+            android:id="@+id/action_paytm"
+            android:title="@string/paytm"
+            app:showAsAction="never"
+    />
+
+</menu>

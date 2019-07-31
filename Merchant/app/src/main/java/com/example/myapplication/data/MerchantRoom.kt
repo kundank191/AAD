@@ -21,7 +21,8 @@ interface MerchantDAO {
     fun getMerchant(id: Int) : LiveData<Merchant>
 }
 
-@Database(entities = [Merchant::class], version = 1)
+@TypeConverters(TypeConverter::class)
+@Database(entities = [Merchant::class], version = 1, exportSchema = false)
 abstract class MerchantDatabase : RoomDatabase() {
 
     abstract fun MerchantDAO() : MerchantDAO

@@ -1,3 +1,17 @@
 <resources>
-    <string name="app_name">My Application</string>
+    <string name="app_name">Bohni</string>
+    <string name="menu_add">Add</string>
+    <string name="phone_pe">Phone Pe</string>
+    <string name="paytm">Paytm</string>
+    <string name="form_username">Name of Merchant</string>
+    <string name="form_user_mobile_number">Mobile Number</string>
+    <string name="add_phone_pe_qr">Add Phone Pe QR</string>
+    <string name="add_paytm_qr">Add Paytm QR</string>
+    <string name="button_save">Save</string>
+    <string name="merchant_name_error">Merchant name is Required</string>
+    <string name="merchant_saved">Merchant Saved!</string>
+    <string name="no_image_picked">You didn\'t pick any image!</string>
+    <string name="title_add_merchant">Add Merchant</string>
+    <string name="phone_pe_qr_received">Phone Pe QR received!</string>
+    <string name="paytm_qr_received">Paytm QR received!</string>
 </resources>

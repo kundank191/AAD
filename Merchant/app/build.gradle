@@ -4,6 +4,8 @@ apply plugin: 'kotlin-android'
 
 apply plugin: 'kotlin-android-extensions'
 
+apply plugin: 'kotlin-kapt'
+
 android {
     compileSdkVersion 29
     defaultConfig {
@@ -35,14 +37,21 @@ dependencies {
     // Architecture components
     implementation 'androidx.lifecycle:lifecycle-livedata:2.0.0'
     implementation 'androidx.lifecycle:lifecycle-viewmodel:2.0.0'
+    implementation "androidx.lifecycle:lifecycle-extensions:2.0.0"
 
     def room_version = "2.1.0"
     implementation "androidx.room:room-runtime:$room_version"
-    annotationProcessor "androidx.room:room-compiler:$room_version" // For Kotlin use kapt instead of annotationProcessor
+    kapt "androidx.room:room-compiler:$room_version"
+    annotationProcessor "androidx.room:room-compiler:$room_version"
     // optional - Kotlin Extensions and Coroutines support for Room
     implementation "androidx.room:room-ktx:$room_version"
 
-
     // Recycler view
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
+
+    // Anko
+    implementation "org.jetbrains.anko:anko-commons:0.10.8"
+    implementation "com.google.android.material:material:1.0.0"
+    // Image picker
+    implementation 'com.github.dhaval2404:imagepicker:1.3'
 }
