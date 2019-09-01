@@ -22,7 +22,7 @@ interface MerchantDAO {
 }
 
 @TypeConverters(TypeConverter::class)
-@Database(entities = [Merchant::class], version = 1, exportSchema = false)
+@Database(entities = [Merchant::class], version = 2, exportSchema = false)
 abstract class MerchantDatabase : RoomDatabase() {
 
     abstract fun MerchantDAO() : MerchantDAO

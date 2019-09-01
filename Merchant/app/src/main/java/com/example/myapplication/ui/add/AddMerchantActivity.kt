@@ -39,6 +39,7 @@ class AddMerchantActivity : AppCompatActivity() {
 
         ib_paytm_qr.setOnClickListener {
             ImagePicker.with(this)
+                .compress(1024)
                 .start(REQUEST_CODE_PAYTM_QR)
         }
     }
@@ -52,12 +53,12 @@ class AddMerchantActivity : AppCompatActivity() {
             e.printStackTrace()
         }
         try {
-            merchant.phonePeImg = iv_phone_pe_qr.drawable
+            merchant.phonePeImg = viewModel.phonePeImagePath
         } catch (e: Exception) {
             e.printStackTrace()
         }
         try {
-            merchant.paytmImg = iv_paytm_qr.drawable
+            merchant.paytmImg = viewModel.paytmImagePath
         } catch (e: Exception) {
             e.printStackTrace()
         }
@@ -83,12 +84,24 @@ class AddMerchantActivity : AppCompatActivity() {
                 REQUEST_CODE_PHONE_PE_QR -> {
                     val fileUri = data?.data
                     iv_phone_pe_qr.setImageURI(fileUri)
+
+                    //You can also get File Path from intent
+                    val filePath: String? = ImagePicker.getFilePath(data)
+
+                    viewModel.phonePeImagePath = filePath
+
                     application.toast(getString(R.string.phone_pe_qr_received))
 
                 }
                 REQUEST_CODE_PAYTM_QR -> {
                     val fileUri = data?.data
                     iv_paytm_qr.setImageURI(fileUri)
+
+                    //You can also get File Path from intent
+                    val filePath: String? = ImagePicker.getFilePath(data)
+
+                    viewModel.paytmImagePath = filePath
+
                     application.toast(getString(R.string.paytm_qr_received))
                 }
             }

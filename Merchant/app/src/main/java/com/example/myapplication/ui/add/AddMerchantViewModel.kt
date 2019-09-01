@@ -10,6 +10,9 @@ import com.example.myapplication.data.Repository
  */
 class AddMerchantViewModel(val repository: Repository) : ViewModel() {
 
+    var phonePeImagePath: String? = null
+    var paytmImagePath: String? = null
+
     fun saveMerchant(merchant: Merchant) {
         repository.saveMerchant(merchant)
     }

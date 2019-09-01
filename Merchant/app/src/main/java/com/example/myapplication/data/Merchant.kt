@@ -1,9 +1,7 @@
 package com.example.myapplication.data
 
-import android.graphics.drawable.Drawable
 import androidx.annotation.NonNull
 import androidx.annotation.Nullable
-import androidx.room.ColumnInfo
 import androidx.room.Entity
 import androidx.room.PrimaryKey
 
@@ -15,9 +13,9 @@ import androidx.room.PrimaryKey
 data class Merchant(
     @NonNull var name: String = "",
     @Nullable var mobileNumber: Int = 0,
-    @Nullable @ColumnInfo(typeAffinity = ColumnInfo.BLOB) var phonePeImg: Drawable? = null,
-    @Nullable @ColumnInfo(typeAffinity = ColumnInfo.BLOB) var paytmImg: Drawable? = null,
-    @Nullable @ColumnInfo(typeAffinity = ColumnInfo.BLOB) var amazonImg: Drawable? = null) {
+    @Nullable var phonePeImg: String? = null,
+    @Nullable var paytmImg: String? = null,
+    @Nullable var amazonImg: String? = null) {
 
     @PrimaryKey(autoGenerate = true)
     var id: Int = 0

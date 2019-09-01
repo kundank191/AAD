@@ -11,7 +11,7 @@ import com.example.myapplication.data.getDatabase
  * Created by Kundan on 31-07-2019.
  */
 class AddMerchantViewModelFactory(
-    private val application: Application
+    application: Application
 ) : ViewModelProvider.Factory {
 
     private val repository = Repository(getDatabase(application))
